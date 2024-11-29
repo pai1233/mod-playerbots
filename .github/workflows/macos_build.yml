@@ -29,6 +29,31 @@ jobs:
         with:
           repository: 'liyunfan1223/mod-playerbots'
           path: 'modules/mod-playerbots'
+      - name: Checkout mod-1v1-arena
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-1v1-arena'
+          path: 'modules/mod-1v1-arena'      
+      - name: Checkout mod-ah-bot
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-ah-bot'
+          path: 'modules/mod-ah-bot'
+      - name: Checkout mod-low-level-rbg
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-low-level-rbg'
+          path: 'modules/mod-low-level-rbg'
+      - name: Checkout mod-npc-enchanter
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-npc-enchanter'
+          path: 'modules/mod-npc-enchanter'
+      - name: Checkout mod-npc-free-professions
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-npc-free-professions'
+          path: 'modules/mod-npc-free-professionsr'
       - name: Cache
         uses: actions/cache@v4
         with:
