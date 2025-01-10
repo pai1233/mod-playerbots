@@ -41,16 +41,6 @@ jobs:
         with:
           repository: 'azerothcore/mod-low-level-rbg'
           path: 'modules/mod-low-level-rbg'
-      - name: Checkout mod-npc-enchanter
-        uses: actions/checkout@v3
-        with:
-          repository: 'azerothcore/mod-npc-enchanter'
-          path: 'modules/mod-npc-enchanter'
-      - name: Checkout mod-npc-free-professions
-        uses: actions/checkout@v3
-        with:
-          repository: 'azerothcore/mod-npc-free-professions'
-          path: 'modules/mod-npc-free-professionsr'
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1.2.13
       - name: Configure OS
