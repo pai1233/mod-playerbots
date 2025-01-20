@@ -1,13 +1,9 @@
 name: windows-build
 on:
   push:
-    branches: [ "Playerbot" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "Playerbot" ]
-
-concurrency:
-  group: ${{ github.head_ref }} || concat(${{ github.ref }}, ${{ github.workflow }})
-  cancel-in-progress: true
+    branches: [ "master" ]
 
 jobs:
   windows-build:
@@ -20,7 +16,16 @@ jobs:
     env:
       BOOST_ROOT: C:\local\boost_1_82_0
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout AzerothCore
+        uses: actions/checkout@v3
+        with:
+          repository: 'liyunfan1223/azerothcore-wotlk'
+          ref: 'Playerbot'
+      - name: Checkout Playerbot Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'liyunfan1223/mod-playerbots'
+          path: 'modules/mod-playerbots'
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1.2.13
       - name: Configure OS
@@ -34,3 +39,8 @@ jobs:
         run: |
           export CTOOLS_BUILD=all
           ./acore.sh compiler build
+      - name: Upload AzerothCore
+        uses: actions/upload-artifact@v4
+        with:
+          name: AzerothCore-${{ env.BUILD_TIME }}
+          path: ${{ github.workspace }}/build/*   
