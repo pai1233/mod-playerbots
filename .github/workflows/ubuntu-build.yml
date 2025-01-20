@@ -19,12 +19,8 @@ jobs:
             cpp_compiler: clang++
             build_type: Release
           - os: ubuntu-22.04
-            c_compiler: gcc
-            cpp_compiler: g++
-            build_type: Release
-          - os: ubuntu-24.04
-            c_compiler: gcc
-            cpp_compiler: g++
+            c_compiler: x86_64-w64-mingw32-gcc
+            cpp_compiler: x86_64-w64-mingw32-g++
             build_type: Release
             
     runs-on: ${{ matrix.os }}
@@ -60,7 +56,7 @@ jobs:
             ccache:${{ matrix.os }}
 
       - name: Install Requirements
-        run: sudo apt-get update && sudo apt-get install ccache git cmake make gcc g++ clang libmysqlclient-dev libssl-dev libbz2-dev libreadline-dev libncurses-dev mysql-server libboost-all-dev
+        run: sudo apt-get update && sudo apt-get install ccache git cmake make gcc g++ clang libmysqlclient-dev libssl-dev libbz2-dev libreadline-dev libncurses-dev mysql-server libboost-all-dev mingw-w64
 
       - name: Configure CMake
         run: >
@@ -72,3 +68,10 @@ jobs:
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+
+
+      - name: Upload AzerothCore
+        uses: actions/upload-artifact@v4
+        with:
+          name: AzerothCore-${{ env.BUILD_TIME }}
+          path: ${{ github.workspace }}/build/*   
