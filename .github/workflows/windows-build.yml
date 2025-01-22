@@ -21,6 +21,36 @@ jobs:
         with:
           repository: 'liyunfan1223/azerothcore-wotlk'
           ref: 'Playerbot'
+          
+      - name: Checkout eluna Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-eluna'
+          path: 'modules/mod-eluna'         
+          
+      - name: Checkout ah-bot Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-ah-bot'
+          path: 'modules/mod-ah-bot'    
+
+      - name: Checkout 1v1-arena Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-1v1-arena'
+          path: 'modules/mod-1v1-arena'           
+
+      - name: Checkout boss-announcer Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-boss-announcer'
+          path: 'modules/mod-boss-announcer'  
+          
+      - name: Checkout npc-enchanter Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-npc-enchanter'
+          path: 'modules/mod-npc-enchanter'           
       - name: Checkout Playerbot Module
         uses: actions/checkout@v3
         with:
