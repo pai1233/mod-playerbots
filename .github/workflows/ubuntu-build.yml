@@ -68,7 +68,9 @@ jobs:
 
       - name: Configure CMake
         run: >
-          cmake -B ${{ steps.strings.outputs.build-output-dir }}
+          mkdir ${{ github.workspace }}/${{ matrix.build_type }}/lib ${{ github.workspace }}/${{ matrix.build_type }}/config && 
+          cmake -B ${{ steps.strings.outputs.build-output-dir }} 
+          -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/${{ matrix.build_type }} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_ETCDIR=config
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
@@ -81,4 +83,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AzerothCore-build
-          path: /home/runner/work/mod-playerbots/mod-playerbots
+          path: ${{ github.workspace }}/${{ matrix.build_type }}
