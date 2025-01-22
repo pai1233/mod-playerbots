@@ -81,4 +81,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AzerothCore-build
-          path: ${{ github.workspace }}
+          path: /home/runner/work/mod-playerbots/mod-playerbots
