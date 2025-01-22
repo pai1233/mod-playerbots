@@ -35,6 +35,18 @@ jobs:
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
           
+      - name: Checkout ah-bot Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-ah-bot'
+          path: 'modules/mod-ah-bot'    
+
+      - name: Checkout boss-announcer Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-boss-announcer'
+          path: 'modules/mod-boss-announcer'         
+          
       - name: Checkout Playerbot Module
         uses: actions/checkout@v3
         with:
@@ -68,5 +80,5 @@ jobs:
       - name: Upload AzerothCore
         uses: actions/upload-artifact@v4
         with:
-          name: AzerothCore-${{ env.BUILD_TIME }}
-          path: ${{ github.workspace }}/build/*   
+          name: AzerothCore-build
+          path: ${{ github.workspace }}
