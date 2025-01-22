@@ -68,7 +68,7 @@ jobs:
 
       - name: Configure CMake
         run: >
-          mkdir ${{ github.workspace }}/${{ matrix.build_type }}/lib ${{ github.workspace }}/${{ matrix.build_type }}/config && 
+          mkdir ${{ github.workspace }}/${{ matrix.build_type }} ${{ github.workspace }}/${{ matrix.build_type }}/lib ${{ github.workspace }}/${{ matrix.build_type }}/config && 
           cmake -B ${{ steps.strings.outputs.build-output-dir }} 
           -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/${{ matrix.build_type }} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_ETCDIR=config
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
