@@ -1,0 +1,50 @@
+name: Windowsbuild
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+   windows-build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022]
+            
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }}
+    steps:
+      - name: Install chocolatey before
+        shell: cmd
+        run: |
+          powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" 
+          SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+          
+      - name: Configure Cmake Visualstudio2022 Openssl mysql
+        run: |
+          choco install -y --skip-checksums --no-progress  cmake.install -y --installargs 'ADD_CMAKE_TO_PATH=System'
+          choco install -y --skip-checksums --no-progress  visualstudio2022-workload-nativedesktop
+          choco install -y --skip-checksums --no-progress openssl --version=3.1.1
+          choco install -y --skip-checksums --no-progress mysql --version=8.0.31
+
+      - name: Checkout Boost
+        uses: actions/checkout@v3
+        with:
+          repository: 'boostorg/boost'
+
+      - name: Configure Boost
+        run: |
+          mkdir __build__ && cd __build__
+          cmake -DBUILD_SHARED_LIBS=ON ..
+
+      - name: Build Boost
+        run: |
+          cd __build__
+          cmake --build . -j 3
+
+      - name: Install Boost
+        run: |
+          cd __build__
+          cmake --build . -j 3 --target install
+ 
