@@ -45,6 +45,52 @@ jobs:
       - name: Configure Install MySQL
         shell: cmd
         run: |
-         cd __build__
-         wget -O mysql-installer-community-8.0.41.0.msi https://cdn.mysql.com/Downloads/MySQLInstaller/mysql-installer-community-8.0.41.0.msi
-         powershell.exe Start-Process "msiexec.exe" -ArgumentList "/i", "mysql-installer-community-8.0.41.0.msi", "/quiet", "/norestart" -Wait
+         powershell.exe 
+         winget install -e --id Oracle.MySQL -v 8.0.41 -l "C:\tools\mysql\current"
+
+      - name: Checkout AzerothCore
+        uses: actions/checkout@v3
+        with:
+          repository: 'liyunfan1223/azerothcore-wotlk'
+          ref: 'Playerbot'
+
+      - name: Checkout eluna Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-eluna'
+          path: 'modules/mod-eluna'         
+          
+      - name: Checkout ah-bot Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-ah-bot'
+          path: 'modules/mod-ah-bot'    
+
+      - name: Checkout 1v1-arena Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-1v1-arena'
+          path: 'modules/mod-1v1-arena'           
+
+      - name: Checkout boss-announcer Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-boss-announcer'
+          path: 'modules/mod-boss-announcer'  
+          
+      - name: Checkout npc-enchanter Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'azerothcore/mod-npc-enchanter'
+          path: 'modules/mod-npc-enchanter'           
+          
+      - name: Checkout Playerbot Module
+        uses: actions/checkout@v3
+        with:
+          repository: 'liyunfan1223/mod-playerbots'
+          path: 'modules/mod-playerbots'    
+      - name: Build
+        shell: bash
+        run: |
+          export CTOOLS_BUILD=all
+          ./acore.sh compiler build    
