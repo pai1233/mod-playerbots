@@ -34,10 +34,11 @@ jobs:
         with:
           repository: 'boostorg/boost'
           submodules: true
+          path: 'Boost'    
 
-      - name: Configure Build Boost
+      - name: Configure Build Install Boost
         run: |
-          mkdir __build__ && cd __build__
+          cd Boost && mkdir __build__ && cd __build__
           cmake -DBUILD_SHARED_LIBS=ON ..
           cmake --build . -j 3
           cmake --build . -j 3 --target install
