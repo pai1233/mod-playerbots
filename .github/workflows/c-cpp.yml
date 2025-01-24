@@ -21,7 +21,7 @@ jobs:
           powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" 
           SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
           
-      - name: Configure Cmake Visualstudio2022 Openssl mysql
+      - name: Configure Cmake Visualstudio2022 Openssl
         run: |
           choco upgrade chocolatey
           choco install -y --skip-checksums --no-progress  cmake.install -y --installargs 'ADD_CMAKE_TO_PATH=System'
@@ -33,22 +33,16 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'boostorg/boost'
+          submodules: true
 
-      - name: Configure Boost
+      - name: Configure Build Boost
         run: |
           mkdir __build__ && cd __build__
           cmake -DBUILD_SHARED_LIBS=ON ..
-
-      - name: Build Boost
-        run: |
-          cd __build__
           cmake --build . -j 3
-
-      - name: Install Boost
-        run: |
-          cd __build__
           cmake --build . -j 3 --target install
-      - name: Download MySQL
+          
+      - name: Configure Install MySQL
         shell: cmd
         run: |
          cd __build__
