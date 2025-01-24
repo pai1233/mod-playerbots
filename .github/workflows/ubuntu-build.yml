@@ -29,12 +29,6 @@ jobs:
           repository: 'liyunfan1223/azerothcore-wotlk'
           ref: 'Playerbot'
 
-      - name: Set reusable strings
-        id: strings
-        shell: bash
-        run: |
-          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
       - name: Checkout eluna Module
         uses: actions/checkout@v3
         with:
@@ -86,9 +80,9 @@ jobs:
 
       - name: Configure CMake
         run: >
-          mkdir ${{ github.workspace }}/${{ matrix.build_type }} ${{ github.workspace }}/${{ matrix.build_type }}/lib ${{ github.workspace }}/${{ matrix.build_type }}/config && 
+          mkdir /home/azerothuser/azerothcore /home/azerothuser/azerothcore/lib /home/azerothuser/azerothcore/config && 
           cmake -B ${{ steps.strings.outputs.build-output-dir }} 
-          -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}/${{ matrix.build_type }} -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_ETCDIR=config
+          -DCMAKE_INSTALL_PREFIX=/home/azerothuser/azerothcore -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_ETCDIR=config
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
@@ -104,4 +98,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AzerothCore-build
-          path: ${{ github.workspace }}/${{ matrix.build_type }}
+          path: /home/azerothuser/azerothcore
