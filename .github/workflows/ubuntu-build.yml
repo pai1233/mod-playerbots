@@ -80,16 +80,16 @@ jobs:
 
       - name: Configure CMake
         run: >
-          sudo mkdir /home/azerothuser /home/azerothuser/azerothcore /home/azerothuser/azerothcore/lib /home/azerothuser/azerothcore/config && 
-          cmake -B ${{ steps.strings.outputs.build-output-dir }} 
-          -DCMAKE_INSTALL_PREFIX=/home/azerothuser/azerothcore -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_ETCDIR=config
+          sudo mkdir /opt/azerothcore /opt/azerothcore/lib /opt/azerothcore/config && 
+          cmake -B ${{ github.workspace }}/build
+          -DCMAKE_INSTALL_PREFIX=/opt/azerothcore -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_ETCDIR=config
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           -S ${{ github.workspace }}
 
       - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+        run: cmake --build ${{ github.workspace }}/build --config ${{ matrix.build_type }}
 
       - name: Install
         run: cmake --install build --config ${{ matrix.build_type }}
@@ -98,4 +98,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AzerothCore-build
-          path: /home/azerothuser/azerothcore
+          path: /opt/azerothcore
