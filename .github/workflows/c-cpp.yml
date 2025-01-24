@@ -46,8 +46,7 @@ jobs:
       - name: Configure Install MySQL
         shell: cmd
         run: |
-         powershell.exe 
-         winget install -e --id Oracle.MySQL -v 8.0.41 -l "C:\tools\mysql\current"
+         powershell.exe winget install -e --id Oracle.MySQL -v 8.0.41 -l "C:\tools\mysql\current"
 
       - name: Checkout AzerothCore
         uses: actions/checkout@v3
