@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2022]
+        os: [windows-latest]
             
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }}
@@ -18,15 +18,16 @@ jobs:
       - name: Install chocolatey before
         shell: cmd
         run: |
-          powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" 
+          powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" 
           SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
           
       - name: Configure Cmake Visualstudio2022 Openssl mysql
         run: |
+          choco upgrade chocolatey
           choco install -y --skip-checksums --no-progress  cmake.install -y --installargs 'ADD_CMAKE_TO_PATH=System'
           choco install -y --skip-checksums --no-progress  visualstudio2022-workload-nativedesktop
           choco install -y --skip-checksums --no-progress openssl --version=3.1.1
-          choco install -y --skip-checksums --no-progress mysql --version=8.0.31
+          # choco install -y --skip-checksums --no-progress mysql --version=8.0.31
 
       - name: Checkout Boost
         uses: actions/checkout@v3
@@ -47,4 +48,9 @@ jobs:
         run: |
           cd __build__
           cmake --build . -j 3 --target install
- 
+      - name: Download MySQL
+        shell: cmd
+        run: |
+         cd __build__
+         wget -O mysql-installer-community-8.0.41.0.msi https://cdn.mysql.com/Downloads/MySQLInstaller/mysql-installer-community-8.0.41.0.msi
+         powershell.exe Start-Process "msiexec.exe" -ArgumentList "/i", "mysql-installer-community-8.0.41.0.msi", "/quiet", "/norestart" -Wait
