@@ -80,7 +80,7 @@ jobs:
 
       - name: Configure CMake
         run: >
-          sudo mkdir /home/azerothuser/azerothcore /home/azerothuser/azerothcore/lib /home/azerothuser/azerothcore/config && 
+          sudo mkdir /home/azerothuser /home/azerothuser/azerothcore /home/azerothuser/azerothcore/lib /home/azerothuser/azerothcore/config && 
           cmake -B ${{ steps.strings.outputs.build-output-dir }} 
           -DCMAKE_INSTALL_PREFIX=/home/azerothuser/azerothcore -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_ETCDIR=config
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
