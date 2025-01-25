@@ -15,14 +15,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }}
     steps:
-      - name: Install scoop before
+      - name: Install scoop  Cmake Visualstudio2022 Openssl Mysql Boost
         shell: powershell
         run: |
           irm get.scoop.sh | iex
-          
-      - name: Configure Cmake Visualstudio2022 Openssl Mysql
-        shell: powershell
-        run: |
           scoop update
           scoop install aria2
           scoop config aria2-warning-enabled false
