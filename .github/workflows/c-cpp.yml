@@ -15,38 +15,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }}
     steps:
-      - name: Install chocolatey before
+      - name: Install scoop before
         shell: cmd
         run: |
-          powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "[System.Net.ServicePointManager]::SecurityProtocol = 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))" 
-          SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+          powershell.exe Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser 
+          powershell.exe Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
           
-      - name: Configure Cmake Visualstudio2022 Openssl
+      - name: Configure Cmake Visualstudio2022 Openssl Mysql
         run: |
-          choco upgrade chocolatey
-          choco install -y --skip-checksums --no-progress  cmake.install -y --installargs 'ADD_CMAKE_TO_PATH=System'
-          choco install -y --skip-checksums --no-progress  visualstudio2022-workload-nativedesktop
-          choco install -y --skip-checksums --no-progress openssl --version=3.1.1
-          # choco install -y --skip-checksums --no-progress mysql --version=8.0.31
-
-      - name: Checkout Boost
-        uses: actions/checkout@v3
-        with:
-          repository: 'boostorg/boost'
-          submodules: true
-          path: 'Boost'    
-
-      - name: Configure Build Install Boost
-        run: |
-          cd Boost && mkdir __build__ && cd __build__
-          cmake -DBUILD_SHARED_LIBS=ON ..
-          cmake --build . -j 3
-          cmake --build . -j 3 --target install
-          
-      - name: Configure Install MySQL
-        shell: cmd
-        run: |
-         powershell.exe winget install -e --id Oracle.MySQL -v 8.0.41 -l "C:\tools\mysql\current"
+          scoop install main/cmake
+          scoop install anderlli0053_DEV-tools/visual-studio-2022-nativedesktop
+          scoop install anderlli0053_DEV-tools/openssl_DoveBoy
+          scoop install xkyii_scoop-xkyii/mysql8-0-30
+          scoop install main/boost
 
       - name: Checkout AzerothCore
         uses: actions/checkout@v3
