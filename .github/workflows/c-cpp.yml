@@ -16,9 +16,9 @@ jobs:
     name: ${{ matrix.os }}
     steps:
       - name: Install scoop before
-        shell: cmd
+        shell: powershell
         run: |
-          powershell.exe irm get.scoop.sh | iex
+          irm get.scoop.sh | iex
           
       - name: Configure Cmake Visualstudio2022 Openssl Mysql
         run: |
