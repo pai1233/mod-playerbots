@@ -18,8 +18,7 @@ jobs:
       - name: Install scoop before
         shell: cmd
         run: |
-          powershell.exe Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser 
-          powershell.exe Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+          powershell.exe irm get.scoop.sh | iex
           
       - name: Configure Cmake Visualstudio2022 Openssl Mysql
         run: |
