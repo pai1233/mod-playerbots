@@ -25,7 +25,7 @@ jobs:
           scoop install main/cmake
           scoop install anderlli0053_DEV-tools/visual-studio-2022-nativedesktop
           scoop install anderlli0053_DEV-tools/openssl_DoveBoy
-          scoop install xkyii_scoop-xkyii/mysql8-0-30
+          scoop install anderlli0053_DEV-tools/mysql_akirco
           scoop install main/boost
 
       - name: Checkout AzerothCore
