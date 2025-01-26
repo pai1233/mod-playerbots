@@ -1,4 +1,4 @@
-name: Windowsbuild
+name: windows-build
 on:
   push:
     branches: [ "master" ]
