@@ -14,16 +14,19 @@ jobs:
             
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }}
-    steps:
-      - name: Install scoop  Cmake Visualstudio2022 Openssl Mysql Boost
+    steps:        
+      - name: Install chocolatey Visualstudio2022 Scoop  Cmake Openssl Mysql Boost
         shell: powershell
         run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          $env:PATH += ";$env:ALLUSERSPROFILE\chocolatey\bin"
+          choco install -y --skip-checksums $INSTALL_ARGS  visualstudio2022-workload-nativedesktop
           irm get.scoop.sh | iex
           scoop update
           scoop install aria2
           scoop config aria2-warning-enabled false
           scoop install main/cmake
-          scoop install okibcn_ScoopMaster/MicrosoftVisualStudioCommunity2022-Install
           scoop install main/openssl
           scoop install main/mysql-lts
           scoop install main/boost
